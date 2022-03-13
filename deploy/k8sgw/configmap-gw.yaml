@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gw
+data:
+  # property-like keys; each key maps to a simple value
+  gw: |
+    "*": 
+      "/": app01
+    "api.digitalcircle.com.br":
+      "/v1/auth/": apiauth

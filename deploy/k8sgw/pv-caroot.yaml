@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: caroot
+  # No namespace, PVs are global
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 1Mi
+  mountOptions:
+  - rsize=1048576
+  - wsize=1048576
+  - hard
+  - timeo=600
+  - retrans=2
+  - noresvport
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: fs-03860033f3a32c3f3.efs.sa-east-1.amazonaws.com
+    path: /
+  claimRef:
+    name: caroot
+    namespace: default
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: caroot
+  namespace: default
+spec:
+  storageClassName: ""
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Mi

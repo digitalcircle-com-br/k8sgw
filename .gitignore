@@ -13,3 +13,7 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+deploy/app01/app
+deploy/k8sing/k8sing
+deploy/sampleapp/app
+deploy/k8sgw/k8sgw

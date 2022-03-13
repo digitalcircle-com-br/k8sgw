@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app01
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app01
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: app01
+    spec:
+      containers:
+      - name: app01
+        image: 294726603466.dkr.ecr.sa-east-1.amazonaws.com/sampleapp
+        env:
+          - name: ME
+            value: ME 01
+        ports:
+        - containerPort: 80

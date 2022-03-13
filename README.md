@@ -1,2 +1,2 @@
-# k8sgw
-Simple Gateway (Ingress) for k8s
+# k8sing
+K8S Ingress Controller made simple

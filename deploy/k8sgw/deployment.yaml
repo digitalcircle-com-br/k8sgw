@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8sgw
+spec:
+  selector:
+    matchLabels:
+      app: k8sgw
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: k8sgw
+    spec:
+      containers:
+        - name: k8sgw
+          image: 294726603466.dkr.ecr.sa-east-1.amazonaws.com/k8sgw #10.100.0.10:5050/k8sing:latest
+          ports:
+            - containerPort: 80
+              name: http
+            - containerPort: 443
+              name: https
+          volumeMounts:
+            - name: caroot
+              mountPath: "/caroot"
+      volumes:
+        - name: caroot
+          persistentVolumeClaim:
+            claimName: caroot
