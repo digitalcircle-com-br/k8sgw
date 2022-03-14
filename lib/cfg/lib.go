@@ -57,6 +57,11 @@ func Setup() error {
 
 				}
 			}
+		} else {
+			log.Printf("Config chan closed")
+			return nil
 		}
 	}
+	log.Printf("Left Config Loop")
+	return nil
 }

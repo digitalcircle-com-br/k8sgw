@@ -37,7 +37,9 @@ func Update(s string) {
 					r.Host = t
 					r.RequestURI = ""
 					urlstr := r.URL.String()
-					urlstr = "http://" + t + "/" + strings.Replace(urlstr, p, "", 1)
+					t = t + "/" + strings.Replace(urlstr, p, "", 1)
+					t = strings.ReplaceAll(t, "//", "/")
+					urlstr = "http://" + t
 
 					nu, err := url.Parse(urlstr)
 					if err != nil {
@@ -46,7 +48,7 @@ func Update(s string) {
 						return
 
 					}
-					log.Printf("Calling %s => %s for host %s", r.URL.String(), urlstr, r.Host)
+					log.Printf("Calling %s => [%s] %s for host %s", r.URL.String(), r.Method, urlstr, r.Host)
 					r.URL = nu
 					res, err := cli.Do(r)
 					if err != nil {
@@ -76,13 +78,14 @@ func Update(s string) {
 		if !ok {
 			rt, ok = mapRouters["*"]
 			if !ok {
+				log.Printf("NO router found for: %s %s %s %s", r.Proto, r.Host, r.Method, r.URL.String())
 				http.NotFound(w, r)
 				return
 			} else {
-				log.Printf("Calling DEFAULT router for host: %s", r.Host)
+				log.Printf("Calling DEFAULT router for host: %s %s %s %s", r.Proto, r.Host, r.Method, r.URL.String())
 			}
 		} else {
-			log.Printf("Calling router for host: %s", r.Host)
+			log.Printf("Calling router for host: %s %s %s %s", r.Proto, r.Host, r.Method, r.URL.String())
 
 		}
 		rt.ServeHTTP(w, r)

@@ -27,7 +27,7 @@ func Cors(next http.Handler) http.Handler {
 			(w).Header().Set("Access-Control-Allow-Origin", corsmode)
 		}
 
-		(w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+		(w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, OPTIONS, CONNECT")
 		(w).Header().Set("Access-Control-Allow-Headers", "Last-Modified, Expires, Accept, Cache-Control, Content-Type, Content-Language,Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, Pragma")
 		(w).Header().Set("Access-Control-Allow-Credentials", "true")
 		if (*r).Method == http.MethodOptions {

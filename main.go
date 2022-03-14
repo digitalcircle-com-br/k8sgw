@@ -39,6 +39,15 @@ func main() {
 	}()
 	log.Printf("%s\n", buildinfo.String())
 
+	rootRouter.HandleFunc("/__test", func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("TEST: %s %s %s %s", r.Proto, r.Host, r.Method, r.URL.String())
+	})
+	rootRouter.Use(func(h http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			log.Printf("Got Request: %s %s %s %s", r.Proto, r.Host, r.Method, r.URL.String())
+			h.ServeHTTP(w, r)
+		})
+	})
 	rootRouter.Use(helmet.Helmet)
 	rootRouter.Use(cors.Cors)
 	rootRouter.Use(csp.Csp)
